@@ -57,16 +57,113 @@ window = pygame.display.set_mode()
 
 points = []
 side_length = 20
-xpos = 0
-ypos = 0
-for sides in range(4):
-    num_sides = 4
-    angle = 360/num_sides
-    radians = math.radians(angle * sides)
-    x = int(xpos + side_length * math.cos(radians))
-    y = int(ypos + side_length * math.sin(radians))
-    points = [x, y]
-    pygame.draw.polygon(window, 'green', points)
-    pygame.display.flip()
+xpos = 400
+ypos = 400
 
-pygame.quit()
+for sides in range(3):
+  num_sides = 3
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+points = []
+for sides in range(4):
+  num_sides = 4
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+points = []
+for sides in range(6):
+  num_sides = 6
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+points = []
+for sides in range(20):
+  num_sides = 20
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+points = []
+for sides in range(100):
+  num_sides = 100
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+points = []
+for sides in range(360):
+  num_sides = 360
+  angle = 360/num_sides
+  radians = math.radians(angle * sides)
+  x = int(xpos + side_length * math.cos(radians))
+  y = int(ypos + side_length * math.sin(radians))
+  pos = (x,y)
+  points.append(pos)
+window.fill([255, 255, 255])
+pygame.draw.polygon(window,[0,0,0], points)
+pygame.display.flip()
+
+pygame.time.delay(1000)
+window.fill([0,0,0])
+pygame.display.flip()
+
+while True:
+  for event in pygame.event.get():
+    if event.type == pygame.quit:
+      pygame.quit()
+      quit()
+    pygame.display.update()
