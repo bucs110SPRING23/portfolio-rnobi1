@@ -1,25 +1,22 @@
 import pygame
 
+pygame.init()
+
 White = (255, 255, 255)
 Black = (0, 0, 0)
 screen = pygame.display.set_mode((700, 700))
 
+screen.fill(Black)
 def snowman (screen, x, y):
-    pygame.draw.circle(screen, White, [60+x, 50+y], 15)
-    pygame.draw.circle(screen, White, [60+x, 80+y], 20)
-    pygame.draw.circle(screen, White, [60+x, 100+y], 30)
+    pygame.draw.circle(screen, White, [100+x, 30+y], 40, 0)
+    pygame.draw.circle(screen, White, [100+x, 90+y], 55, 0)
+    pygame.draw.circle(screen, White, [100+x, 150+y], 70, 0)
 
-pygame.init()
+snowman(screen, 100, 120)
+pygame.display.flip()
 
-done = False
-clock = pygame.time.Clock()
-
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True 
-    screen.fill(Black)
-    pygame.display.update()
-    clock.tick(60)
-
-pygame.quit()
+while True:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      pygame.quit()
+      exit()
