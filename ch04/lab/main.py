@@ -1,87 +1,94 @@
-#Visual studio keeps crashing on me for some reason and I just can't get a hold of whats going on. 
-#I kept trying to save and update my code but its literally just not working even when the univeristy desktops
-#I'm submitting whatever I had before my laptop crahsed because I can't input anything new which means..
-#...I'm missing some components of the lab
-#...I'll probably need this week to fix whatever issue this is
-
-import random 
-import math 
 import pygame
+import random
 
+# Initialize Pygame
 pygame.init()
 
-#dartboard screen 
-screen_width = 800
-screen_length = 800
-window = pygame.display.set_mode([screen_width, screen_length]) 
-window.fill([100,149,237])
-pygame.draw.circle(window,[255,181,197],(400,400), 400, 0)
-pygame.draw.circle(window,[0,0,0],(400,400), 400, 2)
-pygame.draw.line(window, [0,0,0], (0,400), (800,400), 2)
-pygame.draw.line(window, [0,0,0], (400,0), (400,800), 2)
-pygame.display.flip()
+# Define colors for players
+player1_color = (255, 0, 0)  # red
+player2_color = (0, 0, 255)  # blue
 
-player_one = {
-  "Name": "Player 1",
-  "Color": "red",
-}
-player_two = {
-  "Name": "Player 2",
-  "Color": "Blue",
-}
-score_board = [0,0]
+# Set up game window
+width, height = 500, 500
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Dart Game")
 
-#random coordinates 
-def throw_dart():   
-  cord_x = random.randrange(0, 800)
-  cord_y = random.randrange(0, 800)
-  return (cord_x,cord_y)
+# Set up font for displaying winner/tie message
+font = pygame.font.SysFont("Arial", 50)
 
-#determine if throw is in the circle
-def is_in_circle(x,y):
-  distance_from_center = math.hypot(400-x, 400-y)
-  if distance_from_center < screen_width/2:
-    return True 
+# Set up squares for player selection
+player1_box = pygame.Rect(50, 400, 100, 100)
+player2_box = pygame.Rect(350, 400, 100, 100)
+
+# Set up variables to keep track of player scores and user selection
+player1_score = 0
+player2_score = 0
+user_selection = None
+
+# Define function to simulate one round of the game
+def play_round():
+  global player1_score, player2_score
+  player1_dirt = (random.randint(50, 200), random.randint(50, 200))
+  player2_dirt = (random.randint(300, 450), random.randint(50, 200))
+  if player1_dirt[1] > player2_dirt[1]:
+    player1_score += 1
+    return "Player 1 wins!"
+  elif player2_dirt[1] > player1_dirt[1]:
+    player2_score += 1
+    return "Player 2 wins!"
   else:
-    return False
+    return "Tie!"
 
-#alternate turns
-def player_throws(total_throws):
-  total_throws = 0
-  if total_throws %2 == 0:
-    total_throws += 1
-    return player_one
-  else:
-    return player_two
-      
-#determines a hit
-def play1_move(player):
-   x1,y1 = throw_dart()
-   if is_in_circle(x1,y1):
-       pygame.draw.circle(window, [238,59,59], (x1,y1), 5, 0)
-   else:
-        pygame.draw.circle(window, [255,255,0], (x1,y1), 5, 0)
-   score_board[0] += 1
+# Set up main game loop
+running = True
+while running:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+    elif event.type == pygame.MOUSEBUTTONDOWN:
+      if player1_box.collidepoint(event.pos):
+        user_selection = "Player 1"
+      elif player2_box.collidepoint(event.pos):
+        user_selection = "Player 2"
 
-def play2_move(player):
-   x2,y2 = throw_dart()
-   if is_in_circle(x2,y2):
-        pygame.draw.circle(window, [58,95,205], (x2,y2), 5, 0)
-   else:
-        pygame.draw.circle(window, [155,48,255], (x2,y2), 5, 0)  
-   score_board[1] += 1      
-   
-#main function 
-def main():
-  while True: 
-    for turns in range(10):
-        if player_throws(turns) == player_one:
-            play1_move(player_one)
-        if player_throws(turns) == player_two:
-            play2_move(player_two)
+# Clear screen
+screen.fill((255, 255, 255))
 
-main()
-pygame.display.flip()
+# Draw player boxes
+pygame.draw.rect(screen, player1_color, player1_box)
+pygame.draw.rect(screen, player2_color, player2_box)
+
+# Draw text on boxes
+player1_text = font.render("Player 1", True, (255, 255, 255))
+player2_text = font.render("Player 2", True, (255, 255, 255))
+screen.blit(player1_text, (60, 430))
+screen.blit(player2_text, (360, 430))
+
+# Check if user has made a selection
+while user_selection is None:
+  pygame.display.update()
+  continue
+
+# Play 10 rounds of the game
+for i in range(10):
+  round_result = play_round()
+  print(round_result)
+
+# Determine winner or tie
+if player1_score > player2_score:
+  winner_text = "Player 1 wins!"
+elif player2_score > player1_score:
+  winner_text = "Player 2 wins!"
+else:
+  winner_text = "Tie!"
+
+# Draw winner/tie message on screen
+winner_display = font.render(winner_text, True, (0, 0, 0))
+screen.blit(winner_display, (50, 200))
+
+# Draw user selection and check if it was correct
+if user_selection == "Player 1":
+  player1_box
 
 
 while True:
